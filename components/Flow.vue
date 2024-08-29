@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between bg-red-90 0">
+  <div class="flex justify-center bg-red-900">
     <div
       v-for="(child, index) in children"
       :key="index"
@@ -22,17 +22,18 @@
         }"
       >
         {{ child.width }}
+        <!-- {{ child.parent }} -->
         {{ child.text }}
       </div>
       <div class="flex justify-between w-40">
         <button
-          @click="addChild([...path, index], 1)"
+          @click="addChild([...path, index], 1, child)"
           class="outline-none focus:outline-none bg-gray-600"
         >
           Left
         </button>
         <button
-          @click="addChild([...path, index], 2)"
+          @click="addChild([...path, index], 2, child)"
           class="outline-none focus:outline-none bg-gray-600"
         >
           Right
@@ -52,7 +53,7 @@
 
 <script>
 export default {
-  name: 'Flow',
+  name: "Flow",
   props: {
     children: {
       type: Array,
@@ -64,39 +65,31 @@ export default {
     },
   },
   methods: {
-    addChild(path, order) {
+    addChild(path, order, parent) {
       const randomColor = `#${Math.floor(Math.random() * 16777215).toString(
         16
-      )}`
+      )}`;
 
-      // console.log('randomColor ----------------- ', randomColor)
       const newChild = {
         path,
+        parent,
         payload: {
-          // text: 'new new new',
+          parent,
           text: randomColor,
           order,
           width: 300,
           color: randomColor,
           children: [],
         },
-      }
-      // console.log(
-      //   'Emitting add-child with data: ',
-      //   JSON.stringify(newChild, null, 2)
-      // )
-      this.$emit('add-child', newChild)
+      };
+
+      this.$emit("add-child", newChild);
     },
     handleAddChild(data) {
-      // this.addChild(path, order)
-      // console.log(
-      //   'data ----------------- 66666666666 ',
-      //   JSON.stringify(data, null, 2)
-      // )
-      this.$emit('add-child', data)
+      this.$emit("add-child", data);
     },
   },
-}
+};
 </script>
 
 <style scoped>

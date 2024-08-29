@@ -1,20 +1,18 @@
 <template>
   <div class="flex justify-center items- center text-white bg-black h-dvh">
     <div class="overflow-x-auto overflow-y-auto max-w-[99%]">
-      <Flow
-        :children="initialChildren"
-        @add-child="addChild"
-      />
+      <button @click="print">print</button>
+      <Flow :children="initialChildren" @add-child="addChild" />
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
-import Flow from '@/components/Flow.vue'
+import { ref } from "vue";
+import Flow from "@/components/Flow.vue";
 
 export default {
-  name: 'IndexPage',
+  name: "IndexPage",
   components: {
     Flow,
   },
@@ -22,70 +20,71 @@ export default {
     return {
       initialChildren: [
         {
-          text: 'aaaaaaaaaaa',
+          parent: null,
+          text: "aaaaaaaaaaa",
           type: null,
           width: 300,
-          color: '#89631b',
+          color: "#89631b",
           children: [],
         },
       ],
-    }
+    };
   },
   methods: {
-    recalculateWidths(parent) {
-        console.log('parent ***********&&&& ', JSON.stringify(parent, null, 2))
-        console.log('parent.children ***********&&&& ', JSON.stringify(parent.children, null, 2))
-      if (!parent.children || parent?.children?.length <= 1) return parent.width
+    print() {
+      console.log("initialChildren", this.initialChildren);
+    },
+    findParentNode(node, root) {},
+    calculateWidth(leafNode) {
+      if (!leafNode) return;
+      console.log("leafNode ***** ", leafNode);
 
-      let totalWidth = parent.children.reduce((total, child) => {
-        return total + child.width
-      }, 0)
+      let width = 0;
+      while (leafNode !== null) {
+        if (leafNode.children.length > 1) {
+          width = leafNode.children.reduce((acc, child) => {
+            return acc + (child.width || 0);
+          }, 0);
+        }
 
-      totalWidth += parent.width
+        console.log("width ***** ", width);
+        console.log("leafNode.width ***** ", leafNode.width);
 
-      return totalWidth
+        leafNode.width += width;
+
+        leafNode = leafNode.parent;
+      }
     },
     addChild(data) {
-      console.log('data ***********&&&& ', JSON.stringify(data, null, 2))
+      const path = data.path;
 
-      let parent = this.initialChildren[0]
-      for (let i = 1; i < data.path.length; i++) {
-        parent = parent.children[data.path[i]]
+      // const { parent } = data.parent;
+
+      // console.log("parent ----------- ", data.parent);
+
+      // console.log("data -------- *** ", data);
+      let leafNode = this.initialChildren[0];
+      for (let i = 1; i < path.length; i++) {
+        leafNode = leafNode.children[path[i]];
       }
 
-      if (!parent) return
+      if (!leafNode) return;
 
-      if (!parent.children) parent.children = []
+      if (!leafNode.children) leafNode.children = [];
 
-      const hasLeft = parent.children.some((child) => child.order === 1)
-      const hasRight = parent.children.some((child) => child.order === 2)
+      const hasLeft = leafNode.children.some((child) => child.order === 1);
+      const hasRight = leafNode.children.some((child) => child.order === 2);
 
-      if (hasLeft && data.payload.order === 1) return
-      if (hasRight && data.payload.order === 2) return
+      if (hasLeft && data.payload.order === 1) return;
+      if (hasRight && data.payload.order === 2) return;
 
-      console.log('hasLeft ************** ', hasLeft)
-      console.log('hasRight ************** ', hasRight)
+      // console.log("parent ----------- ", data.parent);
 
-      parent.children.push(data.payload)
-      console.log('after push ************** ')
+      // leafNode.children.push({ ...data.payload, parent: data.parent });
+      leafNode.children.push({ ...data.payload });
 
-      parent = this.initialChildren[0]
-      console.log(
-        'after push parent ************** ',
-
-        JSON.stringify(parent, null, 2)
-      )
-      for (let i = 1; i < data.path.length; i++) {
-        console.log('IN LOOPPPPP ***********&&&& ', i)
-        parent = parent.children[data.path[i]]
-
-        parent.width = this.recalculateWidths(parent)
-        console.log(
-          'parentparentparent ***********&&&& ',
-          JSON.stringify(parent, null, 2)
-        )
-      }
+      this.calculateWidth(leafNode);
     },
   },
-}
+};
 </script>
