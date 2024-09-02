@@ -1,3 +1,5 @@
+export const GAP_BETWEEN_NODES_IN_X = 50
+export const GAP_BETWEEN_NODES_IN_Y = 100
 export const WORKFLOW_NODE_DIMENSIONS = {
     width: 350, height: 70,
 }
@@ -16,7 +18,10 @@ export const INITIAL_NODES = [
             parent: null,
             draggable: false,
             x: 0,
-            y: 0
+            y: 0,
+            style:{
+
+            }
         }
     },
      {

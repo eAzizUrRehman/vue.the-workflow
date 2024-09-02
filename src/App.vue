@@ -40,12 +40,14 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import { VueFlow, useVueFlow } from '@vue-flow/core'
+import { VueFlow, useVueFlow, Position } from '@vue-flow/core'
 import { Background } from '@vue-flow/background'
 import { ControlButton, Controls } from '@vue-flow/controls'
 import { MiniMap } from '@vue-flow/minimap'
 import {
   ADDING_NODE_DIMENSIONS,
+  GAP_BETWEEN_NODES_IN_X,
+  GAP_BETWEEN_NODES_IN_Y,
   INITIAL_NODES,
   WORKFLOW_NODE_DIMENSIONS,
 } from './constants.js'
@@ -84,7 +86,8 @@ const setDagreGraph = () => {
   const g = new dagre.graphlib.Graph()
 
   g.setGraph({
-    // align: 'DL',
+    nodesep: GAP_BETWEEN_NODES_IN_X,
+    ranksep: GAP_BETWEEN_NODES_IN_Y,
   })
 
   g.setDefaultEdgeLabel(function () {
@@ -122,19 +125,16 @@ const setDagreGraph = () => {
 }
 
 const adjustPositions = (dagreParsedNodes) => {
-  const  _dagreParsedNodes = dagreParsedNodes.map((node)=>{
-
-    console.log("node ___________ *********** ",node)
-
-
-    return node
-
+  return dagreParsedNodes.map((node) => {
+    return {
+      ...node,
+      targetPosition: Position.Top,
+      sourcePosition: Position.Bottom,
+      x: node.x + 3 * node.width,
+      y: node.y,
+    }
   })
-
-  return _dagreParsedNodes
 }
-
-
 
 const getVueFlowReadyData = (dagreParsedNodes, dagreParsedEdges) => {
   if (!dagreParsedNodes || !dagreParsedEdges) return
@@ -153,6 +153,8 @@ const getVueFlowReadyData = (dagreParsedNodes, dagreParsedEdges) => {
         y: node.data.y,
       },
       draggable: node.data.draggable,
+      targetPosition: Position.Top,
+      sourcePosition: Position.Bottom,
     }
   })
 
