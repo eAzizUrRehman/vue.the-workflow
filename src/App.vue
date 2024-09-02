@@ -40,10 +40,8 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import { VueFlow, useVueFlow, Position } from '@vue-flow/core'
+import { VueFlow, Position } from '@vue-flow/core'
 import { Background } from '@vue-flow/background'
-import { ControlButton, Controls } from '@vue-flow/controls'
-import { MiniMap } from '@vue-flow/minimap'
 import {
   ADDING_NODE_DIMENSIONS,
   GAP_BETWEEN_NODES_IN_X,
@@ -57,7 +55,6 @@ import AddingNode from './components/AddingNode.vue'
 import { nanoid } from 'nanoid'
 
 const nodes = ref([])
-const edges = ref([])
 
 const finalizedNodes = ref([])
 const finalizedEdges = ref([])
@@ -125,15 +122,7 @@ const setDagreGraph = () => {
 }
 
 const adjustPositions = (dagreParsedNodes) => {
-  return dagreParsedNodes.map((node) => {
-    return {
-      ...node,
-      targetPosition: Position.Top,
-      sourcePosition: Position.Bottom,
-      x: node.x + 3 * node.width,
-      y: node.y,
-    }
-  })
+ return dagreParsedNodes
 }
 
 const getVueFlowReadyData = (dagreParsedNodes, dagreParsedEdges) => {
@@ -171,8 +160,6 @@ const getVueFlowReadyData = (dagreParsedNodes, dagreParsedEdges) => {
 }
 
 const runProcess = () => {
-  // console.log("nodes: ______top ", nodes.value)
-
   const { dagreParsedNodes, dagreParsedEdges } = setDagreGraph()
 
   const { vueFlowReadyNodes, vueFlowReadyEdges } = getVueFlowReadyData(

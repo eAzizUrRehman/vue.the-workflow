@@ -1,29 +1,42 @@
 .vue-flow__node .adding-node {
+  pointer-events: auto !important;
+  width: 350px !important;
+  height: fit-content !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  position: relative !important; 
+  z-index: 10 !important;
+}
+
+.vue-flow__node .adding-node .button {
+  outline: none !important;
+  position: relative !important; 
+  z-index: 100 0 !important;
   width: fit-content !important;
   height: fit-content !important;
-  background-color: black !important;
-}
-.vue-flow__node .adding-node .button {
   pointer-events: auto !important;
   cursor: pointer !important;
-  width: fit-content !important;
-  height: fit-content !important;
   border-radius: 10px !important;
   padding: 15px 20px !important;
-  background: transparent !important;
   font-weight: 500 !important;
+  background-color: black !important;
 }
+.vue-flow__node .adding-node .button:focus {
+    outline: none !important;
+}
+
 .vue-flow__node .adding-node .button_order-1 {
   border: 1px solid #dee3ed !important;
   color: #8e96a8 !important;
 }
+
 .vue-flow__node .adding-node .button_order-2 {
-  /* border: 1px solid #8E96A8 !important; */
-  /* color: #8e96a8 !important; */
   border: 1px solid green !important;
   color: green !important;
 }
+
 .vue-flow__node .adding-node .button_order-3 {
-  border: 1px solid #ED6A5E !important;
-  color: #ED6A5E !important;
+  border: 1px solid #ed6a5e !important;
+  color: #ed6a5e !important;
 }
