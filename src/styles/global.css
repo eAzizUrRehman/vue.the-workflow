@@ -1,0 +1,35 @@
+@import '@vue-flow/core/dist/style.css';
+
+html,
+body,
+#app {
+  margin: 0;
+  height: 100%;
+}
+
+#app {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.vue-flow__minimap {
+  transform: scale(75%);
+  transform-origin: bottom right;
+}
+
+.vue-flow__node * {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.vue-flow__node,
+.vue-flow__node.selected {
+  outline: none !important;
+  border: none !important;
+  /* pointer-events: none !important; */
+}
+
+.vue-flow__node:focus,
+.vue-flow__node.selected:focus {
+  outline: none !important;
+  border: none !important;
+}

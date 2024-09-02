@@ -1,0 +1,3 @@
+/* the following styles are required to be imported below the tailwind styles  */
+@import '../src/styles/global.css';
+@import '../src/styles/adding-node.css';
