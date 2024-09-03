@@ -6,10 +6,7 @@
         developed with
         <span>&#128525;</span>
         by
-        <a
-          href="https://github.com/eAzizUrRehman"
-          target="_blank"
-          class="name"
+        <a href="https://github.com/eAzizUrRehman" target="_blank" class="name"
           >Aziz Ur Rehman</a
         >
         !!
@@ -27,5 +24,5 @@
 </template>
 
 <script setup>
-import GithubIcon from './icons/github-icon.vue'
+import GithubIcon from './icons/github-icon.vue';
 </script>

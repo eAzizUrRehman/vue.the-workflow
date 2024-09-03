@@ -1,5 +1,5 @@
 <script setup>
-import { Handle, useHandleConnections } from '@vue-flow/core'
+import { Handle, useHandleConnections } from '@vue-flow/core';
 
 const props = defineProps({
   node: {
@@ -12,21 +12,21 @@ const props = defineProps({
   targetPosition: {
     type: String,
   },
-})
+});
 
-const emit = defineEmits(['on-node-click'])
+const emit = defineEmits(['on-node-click']);
 
 const sourceConnections = useHandleConnections({
   type: 'target',
-})
+});
 
 const targetConnections = useHandleConnections({
   type: 'source',
-})
+});
 
 const onNodeClick = (node) => {
-  emit('on-node-click', node)
-}
+  emit('on-node-click', node);
+};
 </script>
 
 <template>

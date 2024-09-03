@@ -11,7 +11,7 @@
       position: 'relative',
     }"
   >
-   <TopPanel />
+    <TopPanel />
     <VueFlow
       :nodes="finalizedNodes"
       :edges="finalizedEdges"
@@ -20,10 +20,7 @@
       :max-zoom="4"
       fit-view-on-init
     >
-      <Background
-        pattern-color="#aaa"
-        :gap="16"
-      />
+      <Background pattern-color="#aaa" :gap="16" />
       <template #node-workflow="props">
         <WorkflowNode
           :node="props"
@@ -44,83 +41,83 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
-import { VueFlow, Position } from '@vue-flow/core'
-import { Background } from '@vue-flow/background'
+import { onMounted, ref } from 'vue';
+import { VueFlow, Position } from '@vue-flow/core';
+import { Background } from '@vue-flow/background';
 import {
   ADDING_NODE_DIMENSIONS,
   GAP_BETWEEN_NODES_IN_X,
   GAP_BETWEEN_NODES_IN_Y,
   INITIAL_NODES,
   WORKFLOW_NODE_DIMENSIONS,
-} from './constants'
-import dagre from '@dagrejs/dagre'
-import WorkflowNode from './components/workflow-node.vue'
-import AddingNode from './components/adding-node.vue'
-import TopPanel from './components/top-panel.vue'
-import { nanoid } from 'nanoid'
+} from './constants';
+import dagre from '@dagrejs/dagre';
+import WorkflowNode from './components/workflow-node.vue';
+import AddingNode from './components/adding-node.vue';
+import TopPanel from './components/top-panel.vue';
+import { nanoid } from 'nanoid';
 
-const nodes = ref([])
+const nodes = ref([]);
 
-const finalizedNodes = ref([])
-const finalizedEdges = ref([])
+const finalizedNodes = ref([]);
+const finalizedEdges = ref([]);
 
 const setAllNodes = (g) => {
-  if (!nodes.value || nodes.value.length === 0) return
+  if (!nodes.value || nodes.value.length === 0) return;
 
   nodes.value.forEach((node) => {
-    if (!node.id || !node.data) return
+    if (!node.id || !node.data) return;
 
-    g.setNode(node.id, node.data)
-  })
-}
+    g.setNode(node.id, node.data);
+  });
+};
 
 const setAllEdges = (g) => {
-  if (!nodes.value || nodes.value.length === 0) return
+  if (!nodes.value || nodes.value.length === 0) return;
 
   nodes.value.forEach((node) => {
-    if (!node.data.parent || !node.id) return
+    if (!node.data.parent || !node.id) return;
 
-    g.setEdge(node.data.parent, node.id)
-  })
-}
+    g.setEdge(node.data.parent, node.id);
+  });
+};
 
 const getStrokeColor = (g, id) => {
-  const edgesColors = ['#ffa500', '#00cc00', '#ed6a5e']
+  const edgesColors = ['#ffa500', '#00cc00', '#ed6a5e'];
 
-  const _node = g.node(id)
+  const _node = g.node(id);
 
-  let stroke
-  if (_node?.order === 1) stroke = edgesColors[0]
-  else if (_node?.order === 2) stroke = edgesColors[1]
-  else stroke = edgesColors[2]
+  let stroke;
+  if (_node?.order === 1) stroke = edgesColors[0];
+  else if (_node?.order === 2) stroke = edgesColors[1];
+  else stroke = edgesColors[2];
 
-  return stroke
-}
+  return stroke;
+};
 
 const setDagreGraph = () => {
   // it is important to create new instance otherwise dagre won't detect the changes
-  const g = new dagre.graphlib.Graph()
+  const g = new dagre.graphlib.Graph();
 
   g.setGraph({
     nodesep: GAP_BETWEEN_NODES_IN_X,
     ranksep: GAP_BETWEEN_NODES_IN_Y,
-  })
+  });
 
   g.setDefaultEdgeLabel(function () {
-    return {}
-  })
+    return {};
+  });
 
-  setAllNodes(g)
-  setAllEdges(g)
+  setAllNodes(g);
+  setAllEdges(g);
 
-  dagre.layout(g)
-  const nodeIds = g.nodes()
+  dagre.layout(g);
+  const nodeIds = g.nodes();
 
   let dagreParsedNodes = nodeIds.map((id) => ({
     id: id,
     data: g.node(id),
-  }))
+  }));
 
   let dagreParsedEdges = g.edges().map((e) => {
     return {
@@ -131,27 +128,27 @@ const setDagreGraph = () => {
       style: {
         stroke: getStrokeColor(g, e.w),
       },
-    }
-  })
-  dagreParsedNodes = dagreParsedNodes.filter((node) => node.id && node.data)
+    };
+  });
+  dagreParsedNodes = dagreParsedNodes.filter((node) => node.id && node.data);
   dagreParsedEdges = dagreParsedEdges.filter(
-    (edge) => edge.source && edge.target
-  )
+    (edge) => edge.source && edge.target,
+  );
 
-  dagreParsedNodes = adjustPositions(dagreParsedNodes)
+  dagreParsedNodes = adjustPositions(dagreParsedNodes);
 
   return {
     dagreParsedNodes,
     dagreParsedEdges,
-  }
-}
+  };
+};
 
 const adjustPositions = (dagreParsedNodes) => {
-  return dagreParsedNodes
-}
+  return dagreParsedNodes;
+};
 
 const getVueFlowReadyData = (dagreParsedNodes, dagreParsedEdges) => {
-  if (!dagreParsedNodes || !dagreParsedEdges) return
+  if (!dagreParsedNodes || !dagreParsedEdges) return;
 
   const vueFlowReadyNodes = dagreParsedNodes.map((node) => {
     return {
@@ -169,8 +166,8 @@ const getVueFlowReadyData = (dagreParsedNodes, dagreParsedEdges) => {
       draggable: node.data.draggable,
       targetPosition: Position.Top,
       sourcePosition: Position.Bottom,
-    }
-  })
+    };
+  });
 
   const vueFlowReadyEdges = dagreParsedEdges.map((node) => ({
     id: `${node.source}->${node.target}`,
@@ -178,30 +175,30 @@ const getVueFlowReadyData = (dagreParsedNodes, dagreParsedEdges) => {
     target: node.target,
     selectable: node.selectable,
     style: node.style,
-  }))
+  }));
 
   return {
     vueFlowReadyNodes,
     vueFlowReadyEdges,
-  }
-}
+  };
+};
 
 const runProcess = () => {
-  const { dagreParsedNodes, dagreParsedEdges } = setDagreGraph()
+  const { dagreParsedNodes, dagreParsedEdges } = setDagreGraph();
 
   const { vueFlowReadyNodes, vueFlowReadyEdges } = getVueFlowReadyData(
     dagreParsedNodes,
-    dagreParsedEdges
-  )
+    dagreParsedEdges,
+  );
 
-  finalizedNodes.value = vueFlowReadyNodes
-  finalizedEdges.value = vueFlowReadyEdges
-}
+  finalizedNodes.value = vueFlowReadyNodes;
+  finalizedEdges.value = vueFlowReadyEdges;
+};
 
 onMounted(() => {
-  nodes.value = INITIAL_NODES
-  runProcess()
-})
+  nodes.value = INITIAL_NODES;
+  runProcess();
+});
 
 const generateNewNodes = (node) => {
   const newWorkflowNode = {
@@ -214,7 +211,7 @@ const generateNewNodes = (node) => {
       order: node.data.order,
       draggable: false,
     },
-  }
+  };
   const newLeftAddingNode = {
     id: nanoid(10),
     data: {
@@ -225,7 +222,7 @@ const generateNewNodes = (node) => {
       order: 1,
       draggable: false,
     },
-  }
+  };
   const newMiddleAddingNode = {
     id: nanoid(10),
     data: {
@@ -236,7 +233,7 @@ const generateNewNodes = (node) => {
       order: 2,
       draggable: false,
     },
-  }
+  };
 
   const newRightAddingNode = {
     id: nanoid(10),
@@ -248,25 +245,25 @@ const generateNewNodes = (node) => {
       order: 3,
       draggable: false,
     },
-  }
+  };
 
   return {
     newWorkflowNode,
     newLeftAddingNode,
     newMiddleAddingNode,
     newRightAddingNode,
-  }
-}
+  };
+};
 
 const handleAddingNodeClick = (node) => {
-  const index = nodes.value.findIndex((n) => n.id === node.id)
+  const index = nodes.value.findIndex((n) => n.id === node.id);
 
   const {
     newWorkflowNode,
     newLeftAddingNode,
     newMiddleAddingNode,
     newRightAddingNode,
-  } = generateNewNodes(node)
+  } = generateNewNodes(node);
 
   nodes.value[index] = {
     ...nodes.value[index],
@@ -277,10 +274,10 @@ const handleAddingNodeClick = (node) => {
       ...WORKFLOW_NODE_DIMENSIONS,
       type: 'workflow',
     },
-  }
+  };
 
-  nodes.value.push(newLeftAddingNode, newMiddleAddingNode, newRightAddingNode)
+  nodes.value.push(newLeftAddingNode, newMiddleAddingNode, newRightAddingNode);
 
-  runProcess()
-}
+  runProcess();
+};
 </script>

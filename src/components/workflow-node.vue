@@ -1,12 +1,12 @@
 <script setup>
-import SendEmailIcon from './icons/send-email-icon.vue'
+import SendEmailIcon from './icons/send-email-icon.vue';
 
 const props = defineProps({
   node: {
     type: Object,
     required: true,
   },
-})
+});
 </script>
 
 <template>
@@ -22,7 +22,7 @@ const props = defineProps({
         <SendEmailIcon />
       </div>
       <div class="content">
-        <h3 class="title"> Dead Simple! </h3>
+        <h3 class="title">Dead Simple!</h3>
         <p class="description">
           Shoot an
           <strong>e-mail</strong>
