@@ -1,16 +1,5 @@
 <template>
-  <div
-    :style="{
-      width: '100%',
-      height: '100%',
-      backgroundColor: 'black',
-      color: 'white',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      position: 'relative',
-    }"
-  >
+  <div class="workflow-main">
     <TopPanel />
     <VueFlow
       :nodes="finalizedNodes"

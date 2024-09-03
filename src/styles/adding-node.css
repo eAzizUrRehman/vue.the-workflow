@@ -1,18 +1,25 @@
 .vue-flow__node .adding-node {
   pointer-events: auto !important;
-  width: 340px !important;
   height: fit-content !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
   position: relative !important;
   z-index: 10 !important;
+  text-align: center !important;
+  position: relative !important;
+}
+.vue-flow__node .main {
+  position: absolute !important;
+  z-index: 100 !important;
+  top: 0 !important;
+  right: 33% !important;
 }
 
-.vue-flow__node .adding-node .button {
+.vue-flow__node .width-maintainer {
+  height: 1px !important;
+  width: 340px !important;
+}
+
+.vue-flow__node .adding-node .main .button {
   outline: none !important;
-  position: relative !important;
-  z-index: 100 0 !important;
   width: fit-content !important;
   height: fit-content !important;
   pointer-events: auto !important;
@@ -23,21 +30,21 @@
   background-color: black !important;
   font-family: 'Nerko One', cursive !important;
 }
-.vue-flow__node .adding-node .button:focus {
+.vue-flow__node .adding-node .main .button:focus {
   outline: none !important;
 }
 
-.vue-flow__node .adding-node .button_order-1 {
+.vue-flow__node .adding-node .main .button_order-1 {
   border: 1px solid #ffa500 !important;
   color: #ffa500 !important;
 }
 
-.vue-flow__node .adding-node .button_order-2 {
+.vue-flow__node .adding-node .main .button_order-2 {
   border: 1px solid #00cc00 !important;
   color: #00cc00 !important;
 }
 
-.vue-flow__node .adding-node .button_order-3 {
+.vue-flow__node .adding-node .main .button_order-3 {
   border: 1px solid #ed6a5e !important;
   color: #ed6a5e !important;
 }

@@ -28,20 +28,22 @@ const onNodeClick = (node) => {
   emit('on-node-click', node);
 };
 </script>
-
 <template>
   <div class="adding-node">
-    <button
-      type="button"
-      class="button"
-      :class="{
-        'button_order-1': node.data.order === 1,
-        'button_order-2': node.data.order === 2,
-        'button_order-3': node.data.order === 3,
-      }"
-      @click="onNodeClick(props.node)"
-    >
-      Add New Point
-    </button>
+    <div class="main">
+      <button
+        type="button"
+        class="button"
+        :class="{
+          'button_order-1': node.data.order === 1,
+          'button_order-2': node.data.order === 2,
+          'button_order-3': node.data.order === 3,
+        }"
+        @click="onNodeClick(props.node)"
+      >
+        Add New Point
+      </button>
+    </div>
+    <div class="width-maintainer" />
   </div>
 </template>
