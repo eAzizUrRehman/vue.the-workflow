@@ -9,6 +9,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
   border-radius: 10px;
 }
 
@@ -20,7 +21,6 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 .top-panel-container .center-text-container {
-  transform: translateX(-55px);
   position: relative;
   z-index: 100;
   width: fit-content;
@@ -62,4 +62,18 @@
   height: 40px;
   background: black;
   border-radius: 50%;
+}
+
+@media (max-width: 750px) {
+  .top-panel-container {
+    width: 100%;
+    flex-direction: column;
+    height: fit-content;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    gap:5px;
+  }
+  .top-panel-container .center-text-container {
+    padding: 5px 10px;
+  }
 }
