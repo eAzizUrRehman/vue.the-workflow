@@ -1,50 +1,3 @@
-<script setup>
-import { Handle, useHandleConnections } from '@vue-flow/core'
-
-import SendEmailIcon from './SendEmailIcon.vue'
-
-const props = defineProps({
-  node: {
-    type: Object,
-    required: true,
-  },
-  sourcePosition: {
-    type: String,
-  },
-  targetPosition: {
-    type: String,
-  },
-})
-
-const sourceConnections = useHandleConnections({
-  type: 'target',
-})
-
-const targetConnections = useHandleConnections({
-  type: 'source',
-})
-</script>
-
-<template>
-  <div class="">
-    <div class="workflow-node">
-      <SendEmailIcon />
-      <div class="content">
-        <h3 class="title">
-          <!-- Send Email -->
-          {{ node.data.order || "0" }}
-        </h3>
-        <p class="description">
-          You chose
-          <strong>Balance Reminder</strong>
-          to send an email.
-        </p>
-      </div>
-    </div>
-  </div>
-</template>
-
-<style>
 .vue-flow__node .workflow-node {
   background-color: black !important;
   cursor: grab !important;
@@ -55,39 +8,43 @@ const targetConnections = useHandleConnections({
   width: fit-content !important;
   max-height: fit-content !important;
   border-radius: 10px !important;
-  border: 1px solid #dee3ed !important;
   padding: 10px !important;
+  border: 1px solid #9c71fc !important;
+  position: relative !important;
+  z-index: 100 !important;
 }
 
 .vue-flow__node .workflow-node .content {
-  max-height: fit-content !important;
+  height: fit-content !important;
 }
 .vue-flow__node .workflow-node .content .title {
   max-height: fit-content !important;
-  /* color: #161819 !important; */
-  color: white !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
+  color: #9c71fc !important;
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
+  margin-bottom: 10px !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5) !important;
 }
 
 .vue-flow__node .workflow-node .content .description {
   margin-top: 8px;
   font-size: 14px !important;
-  color: #8e96a8 !important;
+  font-weight: 400;
+  color: #9c71fc !important;
   max-height: fit-content !important;
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5) !important;
 }
 .vue-flow__node .workflow-node .content .highlighted {
   font-size: 14px !important;
   color: #8e96a8 !important;
-  font-weight: 600;
+  font-weight: 500;
   max-height: fit-content !important;
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
 }
-</style>

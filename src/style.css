@@ -1,3 +1,18 @@
-/* the following styles are required to be imported below the tailwind styles  */
 @import '../src/styles/global.css';
-@import '../src/styles/adding-node.css';
+@import '../src/styles/top-panel.css';
+
+@font-face {
+  font-family: 'Nerko One';
+  src: url('./font/nerko-one-regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Nerko One', cursive;
+  user-select: none;
+}

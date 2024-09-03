@@ -1,4 +1,6 @@
 @import '@vue-flow/core/dist/style.css';
+@import './workflow-node.css';
+@import './adding-node.css';
 
 html,
 body,

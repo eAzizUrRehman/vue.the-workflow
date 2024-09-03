@@ -42,7 +42,6 @@ const onNodeClick = (node) => {
       @click="onNodeClick(props.node)"
     >
       Add New Point
-      <!-- {{ node.data.order }} -->
     </button>
   </div>
 </template>

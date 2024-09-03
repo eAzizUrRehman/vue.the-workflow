@@ -5,15 +5,20 @@
       height: '100%',
       backgroundColor: 'black',
       color: 'white',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      position: 'relative',
     }"
   >
+   <TopPanel />
     <VueFlow
       :nodes="finalizedNodes"
       :edges="finalizedEdges"
       class="basic-flow"
-      :default-viewport="{ zoom: 1.5 }"
       :min-zoom="0.2"
       :max-zoom="4"
+      fit-view-on-init
     >
       <Background
         pattern-color="#aaa"
@@ -48,10 +53,11 @@ import {
   GAP_BETWEEN_NODES_IN_Y,
   INITIAL_NODES,
   WORKFLOW_NODE_DIMENSIONS,
-} from './constants.js'
+} from './constants'
 import dagre from '@dagrejs/dagre'
-import WorkflowNode from './components/WorkflowNode.vue'
-import AddingNode from './components/AddingNode.vue'
+import WorkflowNode from './components/workflow-node.vue'
+import AddingNode from './components/adding-node.vue'
+import TopPanel from './components/top-panel.vue'
 import { nanoid } from 'nanoid'
 
 const nodes = ref([])
@@ -79,7 +85,21 @@ const setAllEdges = (g) => {
   })
 }
 
+const getStrokeColor = (g, id) => {
+  const edgesColors = ['#ffa500', '#00cc00', '#ed6a5e']
+
+  const _node = g.node(id)
+
+  let stroke
+  if (_node?.order === 1) stroke = edgesColors[0]
+  else if (_node?.order === 2) stroke = edgesColors[1]
+  else stroke = edgesColors[2]
+
+  return stroke
+}
+
 const setDagreGraph = () => {
+  // it is important to create new instance otherwise dagre won't detect the changes
   const g = new dagre.graphlib.Graph()
 
   g.setGraph({
@@ -102,12 +122,17 @@ const setDagreGraph = () => {
     data: g.node(id),
   }))
 
-  let dagreParsedEdges = g.edges().map((e) => ({
-    source: e.v,
-    target: e.w,
-    data: g.edge(e),
-  }))
-
+  let dagreParsedEdges = g.edges().map((e) => {
+    return {
+      source: e.v,
+      target: e.w,
+      data: g.edge(e),
+      selectable: false,
+      style: {
+        stroke: getStrokeColor(g, e.w),
+      },
+    }
+  })
   dagreParsedNodes = dagreParsedNodes.filter((node) => node.id && node.data)
   dagreParsedEdges = dagreParsedEdges.filter(
     (edge) => edge.source && edge.target
@@ -122,7 +147,7 @@ const setDagreGraph = () => {
 }
 
 const adjustPositions = (dagreParsedNodes) => {
- return dagreParsedNodes
+  return dagreParsedNodes
 }
 
 const getVueFlowReadyData = (dagreParsedNodes, dagreParsedEdges) => {
@@ -151,6 +176,8 @@ const getVueFlowReadyData = (dagreParsedNodes, dagreParsedEdges) => {
     id: `${node.source}->${node.target}`,
     source: node.source,
     target: node.target,
+    selectable: node.selectable,
+    style: node.style,
   }))
 
   return {
@@ -257,5 +284,3 @@ const handleAddingNodeClick = (node) => {
   runProcess()
 }
 </script>
-
-<style></style>
