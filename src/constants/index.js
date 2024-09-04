@@ -1,5 +1,5 @@
 export const GAP_BETWEEN_NODES_IN_X = 50;
-export const GAP_BETWEEN_NODES_IN_Y = 100;
+export const GAP_BETWEEN_NODES_IN_Y = 150;
 export const WORKFLOW_NODE_DIMENSIONS = {
   width: 350,
   height: 70,
