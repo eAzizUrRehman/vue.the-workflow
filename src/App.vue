@@ -278,7 +278,7 @@ const setDataInDagreGraph = (g) => {
   setDagreGraphNodes(g);
   setDagreGraphEdges(g);
 
-  dagre.layout(g);
+  dagre.layout(g, { disableOptimalOrderHeuristic: true });
 };
 
 const createNewEmptyDagreGraph = () => {

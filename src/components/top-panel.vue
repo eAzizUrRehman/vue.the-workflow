@@ -1,13 +1,13 @@
 <template>
   <div class="top-panel-container">
-    <h1 class="project-name">Workflow</h1>
+    <h1 class="project-name">the workflow</h1>
     <h3 class="center-text-container">
       <span>
         developed with
         <span>&#128525;</span>
         by
-        <a href="https://github.com/eAzizUrRehman" target="_blank" class="name"
-          >Aziz Ur Rehman</a
+        <a href="https://azizurrehman.com" target="_blank" class="name"
+          >azizurrehman.com</a
         >
         !!
       </span>
@@ -15,7 +15,7 @@
     <a
       role="button"
       target="_blank"
-      href="https://github.com/eAzizUrRehman/workflow"
+      href="https://github.com/eAzizUrRehman/vue.the-workflow"
       class="github-repo-btn"
     >
       <GithubIcon />
